@@ -12,7 +12,7 @@ data1 = {"user":{
 	}
 
 exp1=["AND",["EQ","user.address.city","San Francisco"],["LT", "user.age",55]]
-exp2=["OR",["IN","user.address.state",["IND","DA","A"]],["LT","user.age",24]]
+exp2=["OR",["IN","user.address.state",["IND","DA","A"]],["LT","user.age",54]]
 
 exp=exp2
 class exp_eval(object):
@@ -54,9 +54,11 @@ if __name__=='__main__':
 	temp_list=[]
 	# coverting the json data to python objects
 	# if multiple json data, then same method can be used to get objects of json data
+	import pudb
+	#pudb.set_trace()
 	vars()[data1.keys()[0]] = get_object(data1)
 	for obj in exp[::-1][:-1]:		
 		fun = "exp_eval."+obj[0]+"("+get_value(obj[1:])+")"
 		temp_list = [eval(fun)] + temp_list
-	fun= "exp_eval."+exp1[0]+"("+str(exp[:1]+temp_list)+")"
+	fun= "exp_eval."+exp[0]+"("+str(temp_list)+")"
 	print eval(fun)
